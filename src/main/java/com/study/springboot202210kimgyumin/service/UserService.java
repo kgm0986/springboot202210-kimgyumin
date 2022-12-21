@@ -16,6 +16,7 @@ public class UserService {
         System.out.println("데이터베이스에 insert전: " + userDto);
         userRepository.saveUser(userDto);
         System.out.println("데이터베이스에 insert후: " + userDto);
+
         return userDto.getUserId();
     }
 
