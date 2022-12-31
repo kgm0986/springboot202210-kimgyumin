@@ -51,12 +51,16 @@
         box-shadow: 0px 0px 10px 1px #dbdbdb;
       }
 
+      .success {
+        border: 2px solid #00dd4d;
+      }
+
       .error-msg {
         color: rgb(255,73,23);
         font-size: 11px;
       }
       .register-button {
-        border: 1px solid #dbdbdb;
+        border: 1px solid #31ff79;
         padding: 10px;
         width: 100%;
 
@@ -76,6 +80,7 @@
       <div class="register-inputs">
           <input type="text" class="register-text" placeholder="사용자이름">
           <div class="error-msg">
+            
           </div>
 
       </div>
@@ -132,18 +137,22 @@
             });
           }
           duplicateUsername(username) {
+            const usernameInput = document.querySelectorAll(".register-text")[0];
+            const usernameError = document.querySelectorAll(".error-msg")[0];
             $.ajax({
                 async:false,
                 type: "get",
                 url: "/api/account/username",
-                contentType:"application/json",
-                data: JSON.stringify({"username": username}),
+                data:({"username": username}),
                 dataType:"json",
                 success: (response) => {
-
+                     usernameInput.classList.add("success");
+                     usernameError.textContent="";
                 },
                 error: (errorResponse) => {
-
+                  console.log(errorResponse)
+                  usernameInput.classList.remove("success");
+                    usernameError.textContent = errorResponse.responseJSON.data.duplicate;
                 }
             });
           }
@@ -159,9 +168,9 @@
           }
 
           addEventToUsernameInput() {
-              const usernameInput = document.querySelectorAll(".register=text")[0];
+              const usernameInput = document.querySelectorAll(".register-text")[0];
               usernameInput.onblur = () => {
-                alert("중복확이요청");
+               // alert("중복확인요청");
                 RegisterApi.getInstance().duplicateUsername(usernameInput.value);
               }
           }
