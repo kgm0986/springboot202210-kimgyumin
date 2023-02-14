@@ -34,7 +34,7 @@ public class UserService {
         UserDto userDto = userRepository.findUserByUsername(username);
         if(userDto != null) {
             Map<String,String> errorMap = new HashMap<>();
-            errorMap.put("duplicate", "이미존재하는 사용자 이름입니다");
+            errorMap.put("username", "이미존재하는 사용자 이름입니다");
             throw new CustomDuplicateUsernameException("Duplicate username!!!",errorMap);
         }
     }
